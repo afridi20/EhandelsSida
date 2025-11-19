@@ -8,9 +8,9 @@
 
         public string UserId { get; set; }
 
-        public ApplicationBuilder User { get; set; }
+        public ApplicationUser User { get; set; }
 
-        public List<OrderItem> OrderItems { get; set; } new List<OrderItem>();
+        public List<OrderItem> OrderItems { get; set; } =new List<OrderItem>();
 
             public decimal TotalAmount
         {

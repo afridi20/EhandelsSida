@@ -2,27 +2,27 @@ using EhandelsSida.Data;
 using EhandelsSida.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
- 
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Lägg till databasen (SQL Server LocalDB)
+// 1. Lï¿½gg till databasen (SQL Server LocalDB)
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// 2. Lägg till Identity
+// 2. Lï¿½gg till Identity
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
-    options.SignIn.RequireConfirmedAccount = false; // ändra till true om du vill kräva e-postbekräftelse
+    options.SignIn.RequireConfirmedAccount = false; // anvï¿½ndare kan logga in direkt
 })
-.AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 
-// 3. Lägg till MVC Controllers med Views
+// 3. Lï¿½gg till MVC (Controllers + Views)
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// 4. Middleware (HTTP pipeline)
+// 4. Middleware pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -34,15 +34,16 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication(); // Viktigt för Identity
+// Viktigt: Identity krï¿½ver Authentication + Authorization
+app.UseAuthentication();
 app.UseAuthorization();
 
-// 5. Standard routing för controllers
+// Standard routing
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-// 6. Identity Razor Pages routing
+// Identity endpoints (t.ex. /Account/Login)
 app.MapRazorPages();
 
 app.Run();
