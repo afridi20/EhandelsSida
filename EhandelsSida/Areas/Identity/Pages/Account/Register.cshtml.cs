@@ -106,9 +106,18 @@ namespace EhandelsSida.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                throw new InvalidOperationException("You must log out to access the Register page.");
+                // or: return Forbid(); or RedirectToPage("/Account/Logout");
+            }
+
+
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
+
+      
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
@@ -124,6 +133,8 @@ namespace EhandelsSida.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    //  Lägg till detta direkt efter att användaren skapats
+                      await _userManager.AddToRoleAsync(user, "Customer");
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
