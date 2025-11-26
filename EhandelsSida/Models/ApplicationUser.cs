@@ -1,7 +1,11 @@
-﻿namespace EhandelsSida.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace EhandelsSida.Models
 {
-    public class ApplicationUser
+    public class ApplicationUser : IdentityUser
     {
+       
+
 
     }
 }
