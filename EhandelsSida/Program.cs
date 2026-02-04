@@ -45,6 +45,7 @@ using (var scope = app.Services.CreateScope())
         {
             UserName = "admin@shop.com",
             Email = "admin@shop.com"
+            
         };
         var result = await userManager.CreateAsync(user, "Admin123!");
         if (result.Succeeded)

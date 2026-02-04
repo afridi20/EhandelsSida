@@ -108,8 +108,10 @@ namespace EhandelsSida.Areas.Identity.Pages.Account
         {
             if (User.Identity.IsAuthenticated)
             {
-                throw new InvalidOperationException("You must log out to access the Register page.");
+                throw new InvalidOperationException("You must log out to access the Register page, or not.");
                 // or: return Forbid(); or RedirectToPage("/Account/Logout");
+
+               
             }
 
 

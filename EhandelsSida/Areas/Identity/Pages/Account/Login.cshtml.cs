@@ -87,12 +87,30 @@ namespace EhandelsSida.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+           
+
+            if ( User.Identity.IsAuthenticated)
+            {
+                
+                Response.Redirect("/Identity/Account/Logout");
+               
+            }
+
+
+
+
+
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
             }
 
-            returnUrl ??= Url.Content("~/");
+            
+
+           // returnUrl ??= Url.Content("~/");
+            //throw new InvalidOperationException("You must log out to access the Register page
+            //
+
 
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
