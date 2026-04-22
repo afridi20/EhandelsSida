@@ -2,7 +2,8 @@
 {
     public class Order
     {
-        public int id { get; set; }
+        private decimal totalAmount = 0;
+        public int Id { get; set; }
 
         public DateTime OrderDate { get; set; }
 
@@ -10,23 +11,20 @@
 
         public ApplicationUser User { get; set; }
 
-        public List<OrderItem> OrderItems { get; set; } =new List<OrderItem>();
+        public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
-            public decimal TotalAmount
+        public string Status { get; set; } = "Open";
+
+        public decimal TotalAmount
         {
-
             get
             {
-                decimal total = 0;
                 foreach (var item in OrderItems)
                 {
-                    total += item.Quantity * item.UnitPrice;
+                    totalAmount += item.Quantity * item.UnitPrice;
                 }
-                return total;
+                return totalAmount;
             }
         }
-
-             
-      
     }
 }

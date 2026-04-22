@@ -13,7 +13,12 @@
                         <h5 class="card-title">@item.Name</h5>
                         <p class="card-text">@item.Description</p>
                         <p class="card-text"><strong>@item.Price kr</strong></p>
-                        <a href="#" class="btn btn-primary">Lägg i varukorg</a>
+                        <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                            <input type="hidden" name="productId" value="@item.Id" />
+                            <button type="submit" class="btn btn-primary w-100">
+                                Lägg i varukorg
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,56 @@
+﻿@model Order
+
+<h2>Din varukorg</h2>
+
+@if (Model == null || !Model.OrderItems.Any())
+{
+    <p>Din varukorg är tom.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Produkt</th>
+                <th>Antal</th>
+                <th>Pris</th>
+                <th>Totalt</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderItems)
+            {
+                <tr>
+                    <td>@item.Product.Name</td>
+
+                    <td>
+                        <form asp-action="DecreaseQuantity" method="post" style="display:inline;">
+                            <input type="hidden" name="itemId" value="@item.Id" />
+                            <button class="btn btn-sm btn-outline-secondary">-</button>
+                        </form>
+
+                        @item.Quantity
+
+                        <form asp-action="IncreaseQuantity" method="post" style="display:inline;">
+                            <input type="hidden" name="itemId" value="@item.Id" />
+                            <button class="btn btn-sm btn-outline-secondary">+</button>
+                        </form>
+                    </td>
+
+                    <td>@item.UnitPrice kr</td>
+                    <td>@(item.UnitPrice* item.Quantity) kr</td>
+
+                    <td>
+                        <form asp-action="RemoveItem" method="post">
+                            <input type="hidden" name="itemId" value="@item.Id" />
+                            <button class="btn btn-danger btn-sm">Ta bort</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3>Total summa: @Model.OrderItems.Sum(i => i.UnitPrice * i.Quantity) kr</h3>
+}
