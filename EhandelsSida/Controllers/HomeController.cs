@@ -18,8 +18,8 @@ namespace EhandelsSida.Controllers
 
         public IActionResult Index()
         {
-            var products = _context.Products.ToList(); // Hämtar alla produkter
-            return View(products); // Skickar listan till vyn
+            var products = _context.Products.ToList(); 
+            return View(products); 
         }
 
         public IActionResult Privacy()

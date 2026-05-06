@@ -49,6 +49,7 @@ namespace EhandelsSida.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
+            ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
             return View();
         }
 
@@ -57,7 +58,7 @@ namespace EhandelsSida.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,category,ImageUrl")] Product product)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,CategoryId,ImageUrl")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -65,8 +66,13 @@ namespace EhandelsSida.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+           
+            ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
+
             return View(product);
         }
+
 
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -89,7 +95,7 @@ namespace EhandelsSida.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,category,ImageUrl")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,CategoryId,ImageUrl")] Product product)
         {
             if (id != product.Id)
             {
@@ -151,6 +157,19 @@ namespace EhandelsSida.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        
+        [AllowAnonymous]
+        public async Task<IActionResult> UDetails(int id)
+        {
+            var product = await _context.Products
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (product == null)
+                return NotFound();
+
+            return View(product);
+        }
+
 
         private bool ProductExists(int id)
         {

@@ -1,0 +1,32 @@
+﻿@model EhandelsSida.Models.Order
+
+<h2>Kvitto</h2>
+
+<p><strong>Ordernummer:</strong> @Model.Id</p>
+<p><strong>Datum:</strong> @Model.PaymentDate</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Produkt</th>
+            <th>Antal</th>
+            <th>Pris</th>
+            <th>Totalt</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderItems)
+        {
+            <tr>
+                <td>@item.Product.Name</td>
+                <td>@item.Quantity</td>
+                <td>@item.Product.Price kr</td>
+                <td>@(item.Product.Price* item.Quantity) kr</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Total: @Model.OrderItems.Sum(i => i.Product.Price * i.Quantity) kr</h3>
+
+<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Tillbaka till startsidan</a>

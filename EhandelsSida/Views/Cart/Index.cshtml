@@ -53,4 +53,11 @@ else
     </table>
 
     <h3>Total summa: @Model.OrderItems.Sum(i => i.UnitPrice * i.Quantity) kr</h3>
+
+    @if (Model != null && Model.OrderItems.Any())
+    {
+        <a asp-controller="Payment" asp-action="Checkout" class="btn btn-primary">
+            Checkout
+        </a>
+    }
 }

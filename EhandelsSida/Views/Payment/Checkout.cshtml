@@ -1,0 +1,43 @@
+﻿@model EhandelsSida.Models.Order
+
+<style>
+    .checkout-wrapper {
+        max-width: 300px;
+        margin: 40px auto;
+        text-align: center;
+    }
+
+        .checkout-wrapper input {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            text-align: center;
+        }
+
+        .checkout-wrapper button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+</style>
+
+<div class="checkout-wrapper">
+    <h2>Checkout</h2>
+
+    <p>Total: @Model.OrderItems.Sum(i => i.Quantity * i.Product.Price) kr</p>
+
+    <form method="post" asp-action="ConfirmPayment">
+        <input type="hidden" name="orderId" value="@Model.Id" />
+
+        <label>Kortnummer (låtsas)</label>
+        <input type="text" name="FakeCardNumber" maxlength="16" required />
+
+        <label>Giltigt till</label>
+        <input type="text" name="FakeExpiry" placeholder="MM/YY" required />
+
+        <label>CVC</label>
+        <input type="text" name="FakeCVC" maxlength="3" required />
+
+        <button class="btn btn-success" type="submit">Betala (Mock)</button>
+    </form>
+</div>

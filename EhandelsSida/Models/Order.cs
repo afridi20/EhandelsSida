@@ -7,6 +7,8 @@
 
         public DateTime OrderDate { get; set; }
 
+        public DateTime? PaymentDate { get; set; }
+
         public string UserId { get; set; }
 
         public ApplicationUser User { get; set; }
